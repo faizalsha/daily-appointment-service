@@ -1,0 +1,77 @@
+package com.example.dailyappointmentservice.model;
+
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import java.sql.Date;
+import java.sql.Time;
+
+
+@Entity
+public class Appointment {
+    @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "appointment_id")
+    private String appointmentId;
+    @Column(name = "physician_id")
+    private String physicianId;
+    @Column(name = "patient_id")
+    private String patientId;
+    private Date date;
+    private Time time;
+
+    public Appointment() {
+    }
+
+    public Appointment(String appointmentId, String physicianId, String patientId, Date date, Time time) {
+        this.appointmentId = appointmentId;
+        this.physicianId = physicianId;
+        this.patientId = patientId;
+        this.date = date;
+        this.time = time;
+    }
+
+    public String getAppointmentId() {
+        return appointmentId;
+    }
+
+    public void setAppointmentId(String appointment_id) {
+        this.appointmentId = appointment_id;
+    }
+
+    public String getPhysicianId() {
+        return physicianId;
+    }
+
+    public void setPhysicianId(String physician_id) {
+        this.physicianId = physician_id;
+    }
+
+    public String getPatientId() {
+        return patientId;
+    }
+
+    public void setPatientId(String patient_id) {
+        this.patientId = patient_id;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Time getTime() {
+        return time;
+    }
+
+    public void setTime(Time time) {
+        this.time = time;
+    }
+}
