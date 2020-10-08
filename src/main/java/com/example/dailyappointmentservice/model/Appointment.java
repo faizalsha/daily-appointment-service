@@ -22,17 +22,21 @@ public class Appointment {
     @Column(name = "patient_id")
     private String patientId;
     private Date date;
-    private Time time;
+    @Column(name = "start_time")
+    private Time startTime;
+    @Column(name= "end_time")
+    private Time endTime;
 
     public Appointment() {
     }
 
-    public Appointment(String appointmentId, String physicianId, String patientId, Date date, Time time) {
+    public Appointment(String appointmentId, String physicianId, String patientId, Date date, Time startTime, Time endTime) {
         this.appointmentId = appointmentId;
         this.physicianId = physicianId;
         this.patientId = patientId;
         this.date = date;
-        this.time = time;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     public String getAppointmentId() {
@@ -67,11 +71,21 @@ public class Appointment {
         this.date = date;
     }
 
-    public Time getTime() {
-        return time;
-    }
+	public Time getStartTime() {
+		return startTime;
+	}
 
-    public void setTime(Time time) {
-        this.time = time;
-    }
+	public void setStartTime(Time startTime) {
+		this.startTime = startTime;
+	}
+
+	public Time getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Time endTime) {
+		this.endTime = endTime;
+	}
+
+    
 }

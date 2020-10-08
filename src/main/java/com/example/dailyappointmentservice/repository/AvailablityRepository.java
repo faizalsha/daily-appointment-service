@@ -9,4 +9,5 @@ import com.example.dailyappointmentservice.model.Availability;
 
 public interface AvailablityRepository extends JpaRepository<Availability, String>{
 	List<Availability> findByPhysicianIdAndDate(String physicianId, Date date);
+	Availability findByAvailabilityId(String availabilityId); 
 }

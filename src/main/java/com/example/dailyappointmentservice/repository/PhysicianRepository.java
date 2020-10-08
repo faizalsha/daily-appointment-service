@@ -8,4 +8,5 @@ import com.example.dailyappointmentservice.model.Physician;
 
 public interface PhysicianRepository extends JpaRepository<Physician, String> {
 	List<Physician> findBySpeciality(String speciality);
+	Physician findByPhysicianId(String physicianId);
 }
