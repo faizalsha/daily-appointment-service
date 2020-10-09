@@ -78,8 +78,9 @@ public class AppointmentController {
     }
     
 
-    @RequestMapping(value = "/set-appointment", method = RequestMethod.POST)
-    public GenericResponse setAppointment(@RequestBody Appointment appointment){
+    @RequestMapping(value = "/set-appointment/{availabilityId}", method = RequestMethod.POST)
+    public GenericResponse setAppointment(@RequestBody Appointment appointment, @PathVariable String availabilityId){
+    	availRepository.updateAvailability(availabilityId);
         repository.save(appointment);
         return new GenericResponse(1, "success", appointment);
     }
