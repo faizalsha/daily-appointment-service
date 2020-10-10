@@ -15,7 +15,7 @@ import com.example.dailyappointmentservice.model.Availability;
 public interface AvailablityRepository extends JpaRepository<Availability, String>{
 	
 //	@Query("SELECT avail FROM Availabilty avail where avail.physicianId = ?0 AND avail.date = ?1 AND avail.bookingStatus=false")
-	@Query(value = "SELECT * FROM availability a WHERE a.physician_id = ?1 AND a.date = ?2 AND a.booking_status=0", nativeQuery = true)
+	@Query(value = "SELECT * FROM availability a WHERE a.physician_id = ?1 AND a.date = ?2 AND a.booking_status=0 ORDER BY start_time ASC", nativeQuery = true)
 	List<Availability> findByPhysicianIdAndDate(String physicianId, Date date);
 	
 	Availability findByAvailabilityId(String availabilityId); 
