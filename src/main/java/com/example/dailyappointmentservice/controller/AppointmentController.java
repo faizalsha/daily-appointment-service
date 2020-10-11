@@ -23,7 +23,7 @@ import java.util.List;
 public class AppointmentController {
 
     @Autowired
-    private AppointmentRepository repository;
+    private AppointmentRepository appointmentRepository;
     
     @Autowired
     private AvailablityRepository availRepository;
@@ -81,19 +81,19 @@ public class AppointmentController {
     @RequestMapping(value = "/set-appointment/{availabilityId}", method = RequestMethod.POST)
     public GenericResponse setAppointment(@RequestBody Appointment appointment, @PathVariable String availabilityId){
     	availRepository.updateAvailability(availabilityId);
-        repository.save(appointment);
+    	appointmentRepository.save(appointment);
         return new GenericResponse(1, "success", appointment);
     }
 
     @RequestMapping("/get-appointment-all")
     public GenericResponse getAllAppointment(){
-        List<Appointment> allAppointment =  repository.findAll();
+        List<Appointment> allAppointment =  appointmentRepository.findAll();
         return new GenericResponse(1, "success", allAppointment);
     }
 
     @RequestMapping("/get-appointment/{physicianId}")
     public GenericResponse getAppointmentByPhysician(@PathVariable String physicianId){
-        List<Appointment> appointments = repository.findAllByPhysicianId(physicianId);
+        List<Appointment> appointments = appointmentRepository.findAllByPhysicianId(physicianId);
         return new GenericResponse(1, "success", appointments);
     }
 }
