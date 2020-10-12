@@ -24,7 +24,7 @@ import java.util.List;
 public class AppointmentController {
 
     @Autowired
-    private AppointmentRepository repository;
+    private AppointmentRepository appointmentRepository;
     
     @Autowired
     private AvailablityRepository availRepository;
@@ -33,6 +33,12 @@ public class AppointmentController {
     private PhysicianRepository	physicianRepository;
     
     
+    @RequestMapping(value="/get-physician/{physicianId}")
+    public ResponseEntity<Physician> getPhysician(@PathVariable String physicianId){
+        Physician physician = physicianRepository.findByPhysicianId(physicianId);
+        return new ResponseEntity<Physician>(physician, HttpStatus.OK);
+    }
+   
     @RequestMapping(value="/get-physicians/{speciality}")
     public ResponseEntity<List<Physician>> getPhysicians(@PathVariable String speciality) {
     	List<Physician> physiciansWithSpeciality = physicianRepository.findBySpeciality(speciality);
@@ -46,28 +52,49 @@ public class AppointmentController {
     	return new ResponseEntity<List<Physician>>(physicians, HttpStatus.OK);
 
     }
+    @RequestMapping(value="/get-slot/{availibiltyId}")
+    public ResponseEntity<Availability> getAvailableSlots(@PathVariable String availibiltyId) {
+    	Availability appointmentSlot = availRepository.findByAvailabilityId(availibiltyId);
+    	return new ResponseEntity<Availability>(appointmentSlot, HttpStatus.OK);
+    }
+    
     
     @RequestMapping(value="/get-slots/{physicianId}/{date}")
     public ResponseEntity<List<Availability>> getAvailableSlots(@PathVariable String physicianId, @PathVariable Date date) {
     	List<Availability> allAvailSlots = availRepository.findByPhysicianIdAndDate(physicianId, date);
     	return new ResponseEntity<List<Availability>>(allAvailSlots, HttpStatus.OK);
     }
+    
+    @RequestMapping(value = "/add-slot", method = RequestMethod.POST)
+    public GenericResponse addAvailabilty(@RequestBody Availability availabilty){
+        availRepository.save(availabilty);
+        return new GenericResponse(1, "success", availabilty);
+    }
+    
+    
+    @RequestMapping(value = "/add-physician", method = RequestMethod.POST)
+    public GenericResponse addPhysician(@RequestBody Physician physician){
+        physicianRepository.save(physician);
+        return new GenericResponse(1, "success", physician);
+    }
+    
 
-    @RequestMapping(value = "/set-appointment", method = RequestMethod.POST)
-    public GenericResponse setAppointment(@RequestBody Appointment appointment){
-        repository.save(appointment);
+    @RequestMapping(value = "/set-appointment/{availabilityId}", method = RequestMethod.POST)
+    public GenericResponse setAppointment(@RequestBody Appointment appointment, @PathVariable String availabilityId){
+    	availRepository.updateAvailability(availabilityId);
+    	appointmentRepository.save(appointment);
         return new GenericResponse(1, "success", appointment);
     }
 
     @RequestMapping("/get-appointment-all")
     public GenericResponse getAllAppointment(){
-        List<Appointment> allAppointment =  repository.findAll();
+        List<Appointment> allAppointment =  appointmentRepository.findAll();
         return new GenericResponse(1, "success", allAppointment);
     }
 
     @RequestMapping("/get-appointment/{physicianId}")
     public GenericResponse getAppointmentByPhysician(@PathVariable String physicianId){
-        List<Appointment> appointments = repository.findAllByPhysicianId(physicianId);
+        List<Appointment> appointments = appointmentRepository.findAllByPhysicianId(physicianId);
         return new GenericResponse(1, "success", appointments);
     }
 

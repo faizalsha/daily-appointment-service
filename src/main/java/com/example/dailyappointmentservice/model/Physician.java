@@ -2,14 +2,19 @@ package com.example.dailyappointmentservice.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class Physician {
 	
 	@Id
+	@GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
 	@Column(name="physician_id")
-	private int physicainId;
+	private String physicianId;
 	@Column(name="first_name")
 	private String firstName;
 	@Column(name="last_name")
@@ -22,10 +27,10 @@ public class Physician {
 		
 	}
 
-	public Physician(int physicainId, String firstName, String lastName, String phone, String email,
+	public Physician(String physicianId, String firstName, String lastName, String phone, String email,
 			String speciality) {
 		super();
-		this.physicainId = physicainId;
+		this.physicianId = physicianId;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.phone = phone;
@@ -33,12 +38,12 @@ public class Physician {
 		this.speciality = speciality;
 	}
 
-	public int getPhysicainId() {
-		return physicainId;
+	public String getPhysicianId() {
+		return physicianId;
 	}
 
-	public void setPhysicainId(int physicainId) {
-		this.physicainId = physicainId;
+	public void setPhysicianId(String physicainId) {
+		this.physicianId = physicainId;
 	}
 
 	public String getFirstName() {
