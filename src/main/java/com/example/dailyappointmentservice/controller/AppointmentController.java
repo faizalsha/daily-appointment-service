@@ -101,7 +101,7 @@ public class AppointmentController {
     @RequestMapping("/delete-appointment/{appointmentId}")
     public GenericResponse deleteAppointmentById(@PathVariable String appointmentId){
         try{
-            repository.deleteById(appointmentId);
+            appointmentRepository.deleteById(appointmentId);
             return new GenericResponse(1, "success", null);
         }catch (Exception e){
             return new GenericResponse(0, "exception Occurred", null);
@@ -119,15 +119,15 @@ public class AppointmentController {
         }
     }
 
-    //sample
-    @RequestMapping("/sample")
-    public GenericResponse getSample(){
-        Appointment appointment = new Appointment();
-        appointment.setAppointmentId("abc");
-        appointment.setDate(new Date(10, 10, 10));
-        appointment.setTime(new Time(10, 10, 10));
-        appointment.setPatientId("patient ID");
-        appointment.setPhysicianId("physician ID");
-        return new GenericResponse(1, "success", appointment);
-    }
+//    //sample
+//    @RequestMapping("/sample")
+//    public GenericResponse getSample(){
+//        Appointment appointment = new Appointment();
+//        appointment.setAppointmentId("abc");
+//        appointment.setDate(new Date(10, 10, 10));
+//        appointment.setTime(new Time(10, 10, 10));
+//        appointment.setPatientId("patient ID");
+//        appointment.setPhysicianId("physician ID");
+//        return new GenericResponse(1, "success", appointment);
+//    }
 }
